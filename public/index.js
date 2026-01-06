@@ -1,6 +1,6 @@
 var shadowBack = 0;
 // Debug: fake delay for spinner testing (ms). Set to 0 to disable.
-const DEBUG_DELAY_MS = 200;
+const DEBUG_DELAY_MS = 0;
 
 document.querySelector(".enter-box").addEventListener("click", function () {
   linkGenerate();
@@ -96,40 +96,47 @@ function linkGenerate() {
   console.log(linkLength);
   console.log(url);
 
-  // Update image and download using server-side PNG endpoint
+  // Generate QR client-side using QRCode library (static GitHub Pages)
   const $qrImg = $(".qr-image");
   const $loader = $(".qr-loader");
   const $download = $(".download-btn");
 
-  // Ensure previous handlers don't pile up
   $qrImg.off("load error");
 
-  if (linkLength > 0) {
-    const qrUrl =
-      "/qr?text=" +
-      encodeURIComponent(url) +
-      (DEBUG_DELAY_MS ? "&delay=" + DEBUG_DELAY_MS : "");
-    // Show loader and disable download while generating/loading
+  if (
+    linkLength > 0 &&
+    typeof QRCode !== "undefined" &&
+    typeof QRCode.toDataURL === "function"
+  ) {
     $loader.removeClass("invisible");
     $download.addClass("not-clickable").css("opacity", 0.6);
 
-    // When image loads, hide loader and re-enable download
-    $qrImg.on("load", function () {
-      $loader.addClass("invisible");
-      $download.removeClass("not-clickable").css("opacity", 1);
-      $download.attr("href", qrUrl).attr("download", "qr.png");
-    });
+    QRCode.toDataURL(
+      url,
+      { margin: 1, errorCorrectionLevel: "M", width: 512 },
+      function (err, dataUrl) {
+        if (err) {
+          console.error("QR generation error:", err);
+          $loader.addClass("invisible");
+          $qrImg.attr("src", "./qr_img.png");
+          $download
+            .attr("href", "./qr_img.png")
+            .attr("download", "./qr_img.png")
+            .removeClass("not-clickable")
+            .css("opacity", 1);
+          return;
+        }
 
-    // On error, fallback
-    $qrImg.on("error", function () {
-      $loader.addClass("invisible");
-      $qrImg.attr("src", "./qr_img.png");
-      $download.attr("href", "./qr_img.png").attr("download", "./qr_img.png");
-      $download.removeClass("not-clickable").css("opacity", 1);
-    });
-
-    // Trigger load by setting src
-    $qrImg.attr("src", qrUrl);
+        setTimeout(function () {
+          $qrImg.on("load", function () {
+            $loader.addClass("invisible");
+            $download.removeClass("not-clickable").css("opacity", 1);
+            $download.attr("href", dataUrl).attr("download", "qr.png");
+          });
+          $qrImg.attr("src", dataUrl);
+        }, DEBUG_DELAY_MS || 0);
+      }
+    );
   } else {
     $qrImg.attr("src", "./qr_img.png");
     $download
