@@ -1,0 +1,240 @@
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+  background-color: #1b0d1b;
+  color: #d91656;
+}
+
+.title {
+  position: absolute;
+  text-align: center;
+  text-shadow: 2px 3px 4px whitesmoke;
+  width: 99%;
+  height: auto;
+  font-size: 7rem;
+  font-family: "Open Sans", serif;
+  bottom: 55%;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  width: 50%;
+}
+
+.text-box {
+  background-color: #d91656;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  color: whitesmoke;
+  height: 100%;
+  width: 90%;
+  border-radius: 2ch;
+  font-size: 2rem;
+  font-family: "Open Sans", serif;
+  font-weight: 400;
+  padding: 0;
+  text-align: center;
+  border: none;
+  text-transform: lowercase;
+  outline: none;
+  opacity: 100%;
+  transition-duration: 500ms;
+}
+
+.text-box:hover {
+  opacity: 100%;
+}
+
+.text-box:focus {
+  box-shadow: 5px 10px 15px whitesmoke;
+  opacity: 100%;
+}
+
+.text-box[type="text" i] {
+  padding-block: 0px;
+  padding-inline: 0px;
+}
+
+.not-editable-text {
+  border-radius: 2ch 0 0 2ch;
+  background-color: #d91656;
+  color: whitesmoke;
+  height: 100%;
+  max-width: 200px;
+  min-width: 0px;
+  font-size: 2rem;
+  font-family: "Open Sans", serif;
+  font-weight: 400;
+  padding: 0;
+  padding-left: 20px;
+  text-align: end;
+  border: none;
+  text-transform: lowercase;
+  outline: none;
+  opacity: 100%;
+  transition: 500ms;
+}
+
+.editable-text {
+  border-radius: 0 2ch 2ch 0;
+  background-color: #d91656;
+  color: whitesmoke;
+  height: 100%;
+  width: 100%;
+  font-size: 2rem;
+  font-family: "Open Sans", serif;
+  font-weight: 400;
+  padding: 0;
+  padding-right: 20px;
+  text-align: start;
+  border: none;
+  text-transform: lowercase;
+  outline: none;
+  opacity: 100%;
+}
+
+.enter-box {
+  display: flex;
+  background-color: #d91656;
+  align-items: center;
+  justify-content: center;
+  color: whitesmoke;
+  font-weight: 900;
+  padding: 0;
+  margin-left: 10px;
+  border: 0;
+  height: 60px;
+  width: 60px;
+  min-width: 60px;
+  opacity: 80%;
+  border-radius: 50%;
+  transition: 500ms;
+}
+
+.material-symbols-outlined {
+  font-weight: 900;
+  font-size: 2.5rem;
+}
+
+.enter-box:hover {
+  opacity: 100%;
+}
+
+.popover {
+  height: 600px;
+  width: 600px;
+  border: 0;
+  padding: 0;
+  border-radius: 3ch;
+  background-color: #1b0d1bf8;
+  border: 1px solid #d91656;
+}
+
+.popover-content {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.qr-area {
+  position: relative;
+  width: 60%;
+  height: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.download-btn {
+  background-color: #d91656;
+  border-radius: 50%;
+  padding: 15px;
+}
+
+.download-btn:hover {
+  box-shadow: 1px 2px 4px rgba(245, 245, 245, 0.452);
+}
+
+.qr-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 3ch;
+  transition-duration: 200ms;
+}
+
+.qr-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(27, 13, 27, 0.5);
+  border-radius: 3ch;
+}
+
+.spinner {
+  width: 56px;
+  height: 56px;
+  border: 6px solid #d91656;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.qr-link {
+  background-color: #d91656;
+  font-family: "Open Sans", serif;
+  font-weight: 600;
+  text-decoration: none;
+  color: whitesmoke;
+  border-radius: 3ch;
+  padding: 15px 30px;
+  font-size: 12pt;
+}
+
+.qr-link:hover {
+  box-shadow: 2px 4px 8px rgba(245, 245, 245, 0.452);
+}
+
+.invisible {
+  display: none;
+}
+
+.invisible2 {
+  display: none;
+}
+
+.image100x100 {
+  height: 90%;
+  width: 90%;
+  transition-duration: 200ms;
+}
+
+.shadow {
+  box-shadow: 2px 4px 6px rgba(245, 245, 245, 0.452);
+  transition-duration: 500ms;
+}
+
+.not-clickable {
+  pointer-events: none;
+}
