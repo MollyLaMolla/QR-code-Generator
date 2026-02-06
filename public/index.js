@@ -1,6 +1,6 @@
 var shadowBack = 0;
 // Debug: fake delay for spinner testing (ms). Set to 0 to disable.
-const DEBUG_DELAY_MS = 200;
+const DEBUG_DELAY_MS = 0;
 
 document.querySelector(".enter-box").addEventListener("click", function () {
   linkGenerate();
