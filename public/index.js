@@ -1,6 +1,18 @@
 var shadowBack = 0;
 // Debug: fake delay for spinner testing (ms). Set to 0 to disable.
 const DEBUG_DELAY_MS = 0;
+let currentPrefix =
+  document.querySelector(".prefix-option.active")?.dataset.prefix ?? "https://";
+
+document.querySelectorAll(".prefix-option").forEach((button) => {
+  button.addEventListener("click", function () {
+    document
+      .querySelectorAll(".prefix-option")
+      .forEach((btn) => btn.classList.remove("active"));
+    this.classList.add("active");
+    currentPrefix = this.dataset.prefix ?? "";
+  });
+});
 
 document.querySelector(".enter-box").addEventListener("click", function () {
   linkGenerate();
@@ -41,7 +53,6 @@ document.querySelector(".qr-image").addEventListener("click", function () {
 });
 
 $(document).on("keydown", function (event) {
-  console.log(event.key);
   var shadow = $(".text-box").hasClass("shadow");
   var popover = $(".popover").css("display");
 
@@ -64,11 +75,10 @@ $(document).on("keydown", function (event) {
       shadowBack = 0;
     }
   }
-  console.log("shadow: " + shadowBack);
 });
 
 function linkGenerate() {
-  var url1 = document.querySelector(".not-editable-text").value;
+  var url1 = currentPrefix;
   var url2 = document.querySelector(".editable-text").value;
   var url = url1 + url2;
   var linkLength = url2.length;
@@ -93,9 +103,6 @@ function linkGenerate() {
 
   $(".qr-link").attr("href", url);
 
-  console.log(linkLength);
-  console.log(url);
-
   // Update image and download using server-side PNG endpoint
   const $qrImg = $(".qr-image");
   const $loader = $(".qr-loader");
@@ -109,6 +116,12 @@ function linkGenerate() {
       "/qr?text=" +
       encodeURIComponent(url) +
       (DEBUG_DELAY_MS ? "&delay=" + DEBUG_DELAY_MS : "");
+    const safeName = url
+      .trim()
+      .replace(/[\\/:*?"<>|]/g, "_")
+      .replace(/\s+/g, "_")
+      .slice(0, 120);
+    const downloadName = safeName ? `qr_${safeName}.png` : "qr.png";
     // Show loader and disable download while generating/loading
     $loader.removeClass("invisible");
     $download.addClass("not-clickable").css("opacity", 0.6);
@@ -117,7 +130,7 @@ function linkGenerate() {
     $qrImg.on("load", function () {
       $loader.addClass("invisible");
       $download.removeClass("not-clickable").css("opacity", 1);
-      $download.attr("href", qrUrl).attr("download", "qr.png");
+      $download.attr("href", qrUrl).attr("download", downloadName);
     });
 
     // On error, fallback

@@ -22,11 +22,17 @@
     <h1 class="title">QR Code Gen</h1>
     <div class="box">
       <div class="text-box">
-        <input
-          class="not-editable-text"
-          type="text"
-          value="https://www."
-          readonly />
+        <div class="prefix-toggle" role="group" aria-label="Prefix selection">
+          <button
+            class="prefix-option active"
+            type="button"
+            data-prefix="https://">
+            https://
+          </button>
+          <button class="prefix-option" type="button" data-prefix="">
+            text
+          </button>
+        </div>
         <input class="editable-text" type="text" />
       </div>
       <button popovertarget="my-popover" class="enter-box">
